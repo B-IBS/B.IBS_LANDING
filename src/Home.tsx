@@ -2,12 +2,23 @@ import React from 'react';
 import './Home.css';
 import Logo from './logo.png';
 import HomePhoneScreen from './homephonescreen.png';
-import {Container, Grid, Typography} from "@material-ui/core";
+import GraphPhoneScreen from './graph.png';
+import {Container, Grid, styled, Typography} from "@material-ui/core";
+import ShowChartIcon from '@material-ui/icons/ShowChart';
 
-const PhoneDisplay: React.FC = () => {
+const ChartIcon = styled(ShowChartIcon)({
+  color: "#88BE8C",
+  fontSize: "5em",
+});
+
+interface PhoneDisplayProps {
+  filename: string
+}
+
+const PhoneDisplay: React.FC<PhoneDisplayProps> = (props) => {
   return (
     <div className="phonescreen">
-      <img className="phonescreen-image" src={HomePhoneScreen} alt="phone-screen"/>
+      <img className="phonescreen-image" src={props.filename} alt="phone-screen"/>
     </div>
   );
 };
@@ -48,7 +59,32 @@ const MainContent: React.FC = () => {
           </Grid>
         </Grid>
         <Grid item xs>
-          <PhoneDisplay/>
+          <PhoneDisplay filename={HomePhoneScreen}/>
+        </Grid>
+      </Grid>
+    </Container>
+  );
+};
+
+const GraphContent: React.FC = () => {
+  return (
+    <Container className="graphcontent-container">
+      <Grid container direction="row" justify="center" alignItems="center" alignContent="center" spacing={10}>
+          <Grid item justify="center" alignContent="center">
+            <Typography className="graphcontent-text1" variant="h2">
+              Analyse.
+            </Typography>
+            <div className="graphcontent-icon">
+              <ChartIcon/>
+            </div>
+          </Grid>
+        <Grid item>
+          <PhoneDisplay filename={GraphPhoneScreen}/>
+        </Grid>
+        <Grid item>
+          <Typography className="graphcontent-text2" variant="h4">
+            Lorem ipsum dolor sit amet, consectur adipiscing elit.
+          </Typography>
         </Grid>
       </Grid>
     </Container>
@@ -59,12 +95,14 @@ export const Home: React.FC = () => {
   return (
     <div>
       <Grid container direction="column" justify="center">
-        <Grid item>
+        <Grid item style={{position: 'sticky', top: '0px'}}>
           <TopBar/>
         </Grid>
-        <Grid item style={{margin: '1em'}}/>
         <Grid item>
           <MainContent/>
+        </Grid>
+        <Grid item>
+          <GraphContent/>
         </Grid>
       </Grid>
     </div>
