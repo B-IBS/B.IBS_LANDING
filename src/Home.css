@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 .phonescreen-image {
     height: 70vh;
     border-radius: 60px;
@@ -5,7 +9,23 @@
     box-shadow: 6px 14px 20px #d2d2d2;
 }
 
+/* Expand */
+
+.expand-container {
+    margin-top: 5vh;
+    text-align: center;
+}
+
+.expand-button {
+    border-radius: 100%;
+}
+
 /* TopBar */
+
+.topbar-sticky {
+    position: sticky;
+    top: 0px;
+}
 
 .topbar-container {
     padding-top: 2em;
@@ -26,6 +46,10 @@
 .topbar-button-text {
     color: white;
     font-size: 1.2em;
+}
+
+.topbar-buttonbase {
+    border-radius: 2em;
 }
 
 /* MainContent */
@@ -53,7 +77,8 @@
 /* GraphContent */
 
 .graphcontent-container {
-    min-height: 90vh;
+    min-height: 100vh;
+    padding-top: 10vh;
 }
 
 .graphcontent-text1 {
@@ -72,4 +97,29 @@
 
 .graphcontent-icon {
     text-align: center;
+}
+
+/* FormContent */
+
+.formcontent-container {
+    min-height: 85vh;
+    padding-top: 10vh;
+}
+
+/* FooterContent */
+
+.footercontent-container {
+    border-top: 1px solid #d2d2d2;
+    min-height: 15vh;
+    max-height: 15vh;
+    min-width: 100%;
+    background-color: #88BE8C;
+}
+
+.footercontent-grid {
+    padding-top: 1em;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    color: white;
+    font-size: 1.5em;
 }
