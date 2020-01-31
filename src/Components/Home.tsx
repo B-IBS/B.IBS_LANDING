@@ -1,45 +1,21 @@
-import React from 'react';
-import './Home.css';
-import Logo from './logo.png';
-import HomePhoneScreen from './homephonescreen.png';
-import GraphPhoneScreen from './graph.png';
+import React, {useEffect} from 'react';
 import {ButtonBase, Container, Grid, styled, Typography} from "@material-ui/core";
 import ShowChartIcon from '@material-ui/icons/ShowChart';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+import '../Style/Home.css';
+
+import Logo from '../Assets/logo.png';
+import HomePhoneScreen from '../Assets/homephonescreen.png';
+import GraphPhoneScreen from '../Assets/graph.png';
+
+import {CONTENT, contentIdArray, slidePage, slideTo} from "./SlidingPage";
+import {PhoneDisplay} from "./PhoneScreen";
+import {ExpandButton} from "./ExpandButton";
 
 const ChartIcon = styled(ShowChartIcon)({
   color: "#88BE8C",
   fontSize: "5em",
 });
-
-const ExpandIcon = styled(ExpandMoreIcon)({
-  fontSize: "3em",
-});
-
-interface PhoneDisplayProps {
-  filename: string
-}
-interface ExpandProps {
-  href: string
-}
-
-const PhoneDisplay: React.FC<PhoneDisplayProps> = (props) => {
-  return (
-    <div className="phonescreen">
-      <img className="phonescreen-image" src={props.filename} alt="phone-screen"/>
-    </div>
-  );
-};
-
-const Expand: React.FC<ExpandProps> = (props) => {
-  return (
-    <Container className="expand-container">
-      <ButtonBase href={props.href} className="expand-button" disableRipple={true}>
-        <ExpandIcon/>
-      </ButtonBase>
-    </Container>
-  );
-};
 
 const TopBar: React.FC = () => {
   return (
@@ -49,7 +25,7 @@ const TopBar: React.FC = () => {
           <img className="topbar-container-logo" src={Logo} alt="bibs-logo"/>
         </Grid>
         <Grid item>
-          <ButtonBase href="#formcontent" className="topbar-buttonbase">
+          <ButtonBase onClick={() => slideTo(CONTENT.FORM)} className="topbar-buttonbase">
             <Container className="topbar-button-container">
               <Typography className="topbar-button-text">
                 Do Stuff
@@ -64,7 +40,7 @@ const TopBar: React.FC = () => {
 
 const MainContent: React.FC = () => {
   return (
-    <Container id="topcontent" className="maincontent-container">
+    <Container id={contentIdArray[CONTENT.TOP]} className="maincontent-container">
       <Grid container direction="row" justify="center" spacing={10}>
         <Grid item container xs direction="column" justify="center" spacing={3}>
           <Grid item>
@@ -82,19 +58,21 @@ const MainContent: React.FC = () => {
           <PhoneDisplay filename={HomePhoneScreen}/>
         </Grid>
       </Grid>
-      <Expand href="#graphcontent"/>
+      <ExpandButton href={`#${contentIdArray[CONTENT.GRAPH]}`}/>
     </Container>
   );
 };
 
 const GraphContent: React.FC = () => {
   return (
-    <Container id="graphcontent" className="graphcontent-container">
+    <Container id={contentIdArray[CONTENT.GRAPH]} className="graphcontent-container">
       <Grid container direction="row" justify="center" alignItems="center" alignContent="center" spacing={10}>
-          <Grid item justify="center" alignContent="center">
-            <Typography className="graphcontent-text1" variant="h2">
-              Analyse.
-            </Typography>
+          <Grid item>
+            <div className="graphcontent-icon">
+              <Typography className="graphcontent-text1" variant="h2">
+                Analyse.
+              </Typography>
+            </div>
             <div className="graphcontent-icon">
               <ChartIcon/>
             </div>
@@ -108,14 +86,14 @@ const GraphContent: React.FC = () => {
           </Typography>
         </Grid>
       </Grid>
-      <Expand href="#formcontent"/>
+      <ExpandButton href={`#${contentIdArray[CONTENT.FORM]}`}/>
     </Container>
   );
 };
 
 const FormContent: React.FC = () => {
   return (
-    <Container id="formcontent" className="formcontent-container">
+    <Container id={contentIdArray[CONTENT.FORM]} className="formcontent-container">
       Yes
     </Container>
   );
@@ -136,9 +114,17 @@ const FooterContent: React.FC = () => {
   );
 };
 
+
 export const Home: React.FC = () => {
+  useEffect(() => {
+      setTimeout(() => {
+        if (document.documentElement.scrollTop !== 0)
+          slideTo(CONTENT.TOP)
+      }, 1000);
+  }, []);
+
   return (
-    <div>
+    <div onWheel={slidePage}>
       <Grid container direction="column" justify="center">
         <Grid item className="topbar-sticky">
           <TopBar/>
