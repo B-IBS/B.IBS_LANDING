@@ -1,6 +1,7 @@
 import React from "react";
 import {ButtonBase, Container, styled} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import {slideTo} from "./SlidingPage";
 
 const ExpandIcon = styled(ExpandMoreIcon)({
   color: "#88BE8C",
@@ -8,13 +9,13 @@ const ExpandIcon = styled(ExpandMoreIcon)({
 });
 
 interface ExpandProps {
-  href: string
+  id_nb: number
 }
 
 export const ExpandButton: React.FC<ExpandProps> = (props) => {
   return (
     <Container className="expand-container">
-      <ButtonBase href={props.href} className="expand-button" disableRipple={true}>
+      <ButtonBase onClick={() => slideTo(props.id_nb)} className="expand-button" disableRipple={true}>
         <ExpandIcon/>
       </ButtonBase>
     </Container>

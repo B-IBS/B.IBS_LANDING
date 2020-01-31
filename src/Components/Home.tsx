@@ -1,5 +1,14 @@
 import React, {useEffect} from 'react';
-import {ButtonBase, Container, Grid, styled, Typography} from "@material-ui/core";
+import {
+  ButtonBase,
+  Container,
+  Grid,
+  styled,
+  Typography,
+  ThemeProvider,
+  createMuiTheme,
+  responsiveFontSizes
+} from "@material-ui/core";
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 
 import '../Style/Home.css';
@@ -11,6 +20,9 @@ import GraphPhoneScreen from '../Assets/graph.png';
 import {CONTENT, contentIdArray, slidePage, slideTo} from "./SlidingPage";
 import {PhoneDisplay} from "./PhoneScreen";
 import {ExpandButton} from "./ExpandButton";
+
+let theme = createMuiTheme();
+theme = responsiveFontSizes(theme);
 
 const ChartIcon = styled(ShowChartIcon)({
   color: "#88BE8C",
@@ -58,7 +70,7 @@ const MainContent: React.FC = () => {
           <PhoneDisplay filename={HomePhoneScreen}/>
         </Grid>
       </Grid>
-      <ExpandButton href={`#${contentIdArray[CONTENT.GRAPH]}`}/>
+      <ExpandButton id_nb={CONTENT.GRAPH}/>
     </Container>
   );
 };
@@ -82,11 +94,11 @@ const GraphContent: React.FC = () => {
         </Grid>
         <Grid item>
           <Typography className="graphcontent-text2" variant="h4">
-            Lorem ipsum dolor sit amet, consectur adipiscing elit.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </Typography>
         </Grid>
       </Grid>
-      <ExpandButton href={`#${contentIdArray[CONTENT.FORM]}`}/>
+      <ExpandButton id_nb={CONTENT.FORM}/>
     </Container>
   );
 };
@@ -125,23 +137,25 @@ export const Home: React.FC = () => {
 
   return (
     <div onWheel={slidePage}>
-      <Grid container direction="column" justify="center">
-        <Grid item className="topbar-sticky">
-          <TopBar/>
+      <ThemeProvider theme={theme}>
+        <Grid container direction="column" justify="center">
+          <Grid item className="topbar-sticky">
+            <TopBar/>
+          </Grid>
+          <Grid item>
+            <MainContent/>
+          </Grid>
+          <Grid item>
+            <GraphContent/>
+          </Grid>
+          <Grid item>
+            <FormContent/>
+          </Grid>
+          <Grid item>
+            <FooterContent/>
+          </Grid>
         </Grid>
-        <Grid item>
-          <MainContent/>
-        </Grid>
-        <Grid item>
-          <GraphContent/>
-        </Grid>
-        <Grid item>
-          <FormContent/>
-        </Grid>
-        <Grid item>
-          <FooterContent/>
-        </Grid>
-      </Grid>
+      </ThemeProvider>
     </div>
   );
 };
