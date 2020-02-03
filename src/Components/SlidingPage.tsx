@@ -2,14 +2,16 @@ import React from "react";
 
 export const CONTENT = {
   TOP: 0,
-  GRAPH: 1,
-  FORM: 2
+  ANALYSE: 1,
+  SCAN: 2,
+  FORM: 3
 };
 
 
 export const contentIdArray = [
   "topcontent",
   "graphcontent",
+  "scancontent",
   "formcontent"
 ];
 
