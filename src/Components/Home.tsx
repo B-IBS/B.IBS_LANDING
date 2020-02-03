@@ -19,6 +19,7 @@ import Logo from '../Assets/logo.png';
 import LogoFull from '../Assets/logo_full.png';
 import HomePhoneScreen from '../Assets/homephonescreen.png';
 import GraphPhoneScreen from '../Assets/graph.png';
+import ScanPhoneScreen from '../Assets/scan.png';
 
 import {CONTENT, contentIdArray, slidePage, slideTo} from "./SlidingPage";
 import {PhoneDisplay} from "./PhoneScreen";
@@ -163,7 +164,7 @@ const ScanContentSize: React.FC<WidthProps> = (props) => {
           )}
         </Grid>
         <Grid item>
-          <PhoneDisplay filename={GraphPhoneScreen}/>
+          <PhoneDisplay filename={ScanPhoneScreen}/>
         </Grid>
         { isWidthUp('lg', props.width) && (
           <Grid item>
