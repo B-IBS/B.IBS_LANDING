@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ButtonBase,
   Container,
@@ -7,8 +7,9 @@ import {
   Typography,
   ThemeProvider,
   createMuiTheme,
-  responsiveFontSizes, isWidthDown, isWidthUp, withWidth, InputBase
+  responsiveFontSizes, isWidthDown, isWidthUp, withWidth, InputBase, Snackbar, Fade, Slide
 } from "@material-ui/core";
+import Alert from '@material-ui/lab/Alert';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import CenterFocusWeakIcon from '@material-ui/icons/CenterFocusWeak';
 import MailIcon from '@material-ui/icons/Mail';
@@ -20,11 +21,15 @@ import LogoFull from '../Assets/logo_full.png';
 import HomePhoneScreen from '../Assets/homephonescreen.png';
 import GraphPhoneScreen from '../Assets/graph.png';
 import ScanPhoneScreen from '../Assets/scan.png';
+import BrainIA from '../Assets/brain-ia.png';
+import MedicHeart from '../Assets/medic-heart.png';
+import PuzzlePiece from '../Assets/puzzle-piece.png';
 
 import {CONTENT, contentIdArray, slidePage, slideTo} from "./SlidingPage";
 import {PhoneDisplay} from "./PhoneScreen";
 import {ExpandButton} from "./ExpandButton";
 import {Breakpoint} from "@material-ui/core/styles/createBreakpoints";
+import {TransitionProps} from "@material-ui/core/transitions";
 
 let theme = createMuiTheme();
 theme = responsiveFontSizes(theme);
@@ -46,6 +51,10 @@ interface WidthProps {
   width: Breakpoint
 }
 
+function SlideTransition(props: TransitionProps) {
+  return <Slide {...props} direction="down" />;
+}
+
 const TopBar: React.FC = () => {
   return (
     <Container className="topbar-container" maxWidth="xl">
@@ -57,7 +66,7 @@ const TopBar: React.FC = () => {
           <ButtonBase onClick={() => slideTo(CONTENT.FORM)} className="topbar-buttonbase">
             <Container className="topbar-button-container">
               <Typography className="topbar-button-text">
-                Do Stuff
+                Enregistrez vous
               </Typography>
             </Container>
           </ButtonBase>
@@ -74,17 +83,72 @@ const MainContent: React.FC = () => {
         <Grid item container xs direction="column" justify="center" spacing={3}>
           <Grid item>
             <Typography className="maincontent-text1" align="right" variant="h2">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Reprenez le contrôle
             </Typography>
           </Grid>
           <Grid item>
             <Typography className="maincontent-text2" align="right" variant="h6">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Devenez un acteur majeur de votre maladie grâce à B.IBS
             </Typography>
           </Grid>
         </Grid>
         <Grid item xs>
           <PhoneDisplay filename={HomePhoneScreen}/>
+        </Grid>
+      </Grid>
+      <ExpandButton id_nb={CONTENT.FEATURE}/>
+    </Container>
+  );
+};
+
+const FeatureContent: React.FC = () => {
+  return (
+    <Container id={contentIdArray[CONTENT.FEATURE]} className="featurecontent-container">
+      <Grid className="featurecontent-grid-container" container direction="row" justify="space-around" spacing={8}>
+        <Grid item container xs direction="column" alignItems="center" spacing={5} style={{paddingTop: '15vh'}}>
+          <Grid item>
+            <img src={BrainIA}  alt="brain-ia" width="100%"/>
+          </Grid>
+          <Grid item>
+            <Typography className="featurecontent-title" variant="h4" align="center">
+              Intelligence Artificielle
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography className="featurecontent-description" variant="h5" align="center">
+              Profitez d'un suivi et de recommandations personnalisées grâce à l'intelligence artificielle
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid item container xs direction="column" alignItems="center" spacing={5} style={{paddingTop: '15vh'}}>
+          <Grid item>
+            <img src={PuzzlePiece} alt="puzzle-piece" width="100%"/>
+          </Grid>
+          <Grid item>
+            <Typography className="featurecontent-title" variant="h4" align="center">
+              Personnalisable et personnalisé
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography className="featurecontent-description" variant="h5" align="center">
+              Profitez de solutions adaptées à vos besoins et choissisez celles que vous préférez
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid item container xs direction="column" alignItems="center" spacing={5} style={{paddingTop: '15vh'}}>
+          <Grid item>
+            <img src={MedicHeart} alt="medic-heart" width="100%"/>
+          </Grid>
+          <Grid item>
+            <Typography className="featurecontent-title" variant="h4" align="center">
+              Faites vous comprendre
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography className="featurecontent-description" variant="h5" align="center">
+              Facilitez la communication avec votre médecin à l'aide d'une synthèse de votre situation
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
       <ExpandButton id_nb={CONTENT.ANALYSE}/>
@@ -97,7 +161,7 @@ const AnalyseContentSize: React.FC<WidthProps> = (props) => {
     return (
       <div className="graphcontent-icon">
         <Typography className="graphcontent-text2" variant="h4">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Suivez vos progression grâce à des outils faciles à utiliser
         </Typography>
       </div>
     );
@@ -108,17 +172,15 @@ const AnalyseContentSize: React.FC<WidthProps> = (props) => {
           <Grid item>
             <div className="graphcontent-icon">
               <Typography className="graphcontent-text1" variant="h2">
-                Analyse.
+                Analyse
               </Typography>
             </div>
             <div className="graphcontent-icon">
               <ChartIcon/>
             </div>
-            { isWidthDown('md', props.width) && (
-              <div className="graphcontent-icon">
-                {responsiveSideText()}
-              </div>
-            )}
+            {
+              isWidthDown('md', props.width) && responsiveSideText()
+            }
           </Grid>
         <Grid item>
           <PhoneDisplay filename={GraphPhoneScreen}/>
@@ -140,7 +202,7 @@ const ScanContentSize: React.FC<WidthProps> = (props) => {
     return (
       <div className="scancontent-icon">
         <Typography className="scancontent-text2" variant="h4">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Simplifiez vous la recherche des FODMAPs
         </Typography>
       </div>
     );
@@ -151,17 +213,15 @@ const ScanContentSize: React.FC<WidthProps> = (props) => {
         <Grid item>
           <div className="scancontent-icon">
             <Typography className="scancontent-text1" variant="h2">
-              Scan.
+              Scan
             </Typography>
           </div>
           <div className="scancontent-icon">
             <ScanIcon/>
           </div>
-          { isWidthDown('md', props.width) && (
-            <div className="scancontent-icon">
-              {responsiveSideText()}
-            </div>
-          )}
+          {
+            isWidthDown('md', props.width) && responsiveSideText()
+          }
         </Grid>
         <Grid item>
           <PhoneDisplay filename={ScanPhoneScreen}/>
@@ -172,48 +232,85 @@ const ScanContentSize: React.FC<WidthProps> = (props) => {
           </Grid>
         )}
       </Grid>
-      <ExpandButton id_nb={CONTENT.FORM}/>
+      <ExpandButton id_nb={CONTENT.END}/>
     </Container>
   );
 };
 const ScanContent = withWidth()(ScanContentSize);
 
 const FormContent: React.FC = () => {
+  const [snackState, setSnackState] = useState(false);
+
   return (
     <Container id={contentIdArray[CONTENT.FORM]} className="formcontent-container">
-      <Grid container direction="row">
+      <Grid container direction="row" className="formcontent-grid">
         <Grid item xs={6}>
           <img className="formcontent-logo" src={LogoFull} alt="bibs-logo"/>
         </Grid>
         <Grid container direction="column" spacing={3} alignItems="center" justify="center" item xs={6}>
           <Grid item>
             <Typography variant="h2" className="formcontent-top-text">
-              Stay updated:
+              Restez en contact:
             </Typography>
           </Grid>
           <Grid item className="formcontent-textfield-container">
             <InputBase className="formcontent-textfield" defaultValue="Email"/>
           </Grid>
           <Grid item className="formcontent-textfield-container">
-            <InputBase className="formcontent-textfield" defaultValue="Name"/>
+            <InputBase className="formcontent-textfield" defaultValue="Nom"/>
           </Grid>
           <Grid item className="formcontent-textfield-container">
-            <InputBase className="formcontent-textfield" defaultValue="Firstname"/>
+            <InputBase className="formcontent-textfield" defaultValue="Prénom"/>
           </Grid>
           <Grid item className="formcontent-button-grid">
-            <ButtonBase className="formcontent-buttonbase">
+            <ButtonBase className="formcontent-buttonbase" onClick={() => setSnackState(true)}>
               <Container className="formcontent-button-container">
                 <Typography variant="h5" className="formcontent-buttontext">
-                  Subscribe
+                  S'inscrire
                 </Typography>
               </Container>
             </ButtonBase>
           </Grid>
         </Grid>
       </Grid>
+      <Snackbar
+        open={snackState}
+        TransitionComponent={SlideTransition}
+        autoHideDuration={3000}
+        onClose={() => setSnackState(false)}
+        anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+      >
+        <Alert severity="success">
+          Merci de votre support
+        </Alert>
+      </Snackbar>
+      <ExpandButton id_nb={CONTENT.TOP}/>
     </Container>
   );
 };
+
+const EndContent: React.FC = () => {
+  return (
+    <Container id={contentIdArray[CONTENT.END]} className="endcontent-container">
+      <Grid container direction="column" justify="center" alignItems="center" className="endcontent-grid" spacing={5}>
+        <Grid item>
+          <Typography variant="h2" className="endcontent-title" align="center">
+            Pour rester informés, enregistrez vous par mail.
+          </Typography>
+        </Grid>
+        <Grid item>
+          <ButtonBase onClick={() => slideTo(CONTENT.FORM)} className="topbar-buttonbase">
+            <Container className="endcontent-button-container">
+              <Typography className="endcontent-button-text">
+                S'inscrire
+              </Typography>
+            </Container>
+          </ButtonBase>
+        </Grid>
+      </Grid>
+    </Container>
+  )
+}
 
 const FooterContent: React.FC = () => {
   return (
@@ -230,12 +327,12 @@ const FooterContent: React.FC = () => {
 
 
 export const Home: React.FC = () => {
-  useEffect(() => {
-      setTimeout(() => {
-        if (document.documentElement.scrollTop !== 0)
-          slideTo(CONTENT.TOP)
-      }, 1000);
-  }, []);
+  // useEffect(() => {
+  //     setTimeout(() => {
+  //       if (document.documentElement.scrollTop !== 0)
+  //         slideTo(CONTENT.FORM)
+  //     }, 1000);
+  // }, []);
 
   return (
     <div onWheel={slidePage}>
@@ -245,7 +342,13 @@ export const Home: React.FC = () => {
             <TopBar/>
           </Grid>
           <Grid item>
+            <FormContent/>
+          </Grid>
+          <Grid item>
             <MainContent/>
+          </Grid>
+          <Grid item>
+            <FeatureContent/>
           </Grid>
           <Grid item>
             <AnalyseContent/>
@@ -254,7 +357,7 @@ export const Home: React.FC = () => {
             <ScanContent/>
           </Grid>
           <Grid item>
-            <FormContent/>
+            <EndContent/>
           </Grid>
           <Grid item>
             <FooterContent/>

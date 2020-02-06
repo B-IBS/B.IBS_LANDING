@@ -1,18 +1,22 @@
 import React from "react";
 
 export const CONTENT = {
-  TOP: 0,
-  ANALYSE: 1,
-  SCAN: 2,
-  FORM: 3
+  FORM: 0,
+  TOP: 1,
+  FEATURE: 2,
+  ANALYSE: 3,
+  SCAN: 4,
+  END: 5
 };
 
 
 export const contentIdArray = [
+  "formcontent",
   "topcontent",
+  "featurecontent",
   "graphcontent",
   "scancontent",
-  "formcontent"
+  "endcontent"
 ];
 
 let then = new Date().getTime();
