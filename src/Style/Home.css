@@ -54,6 +54,63 @@ html {
     border-radius: 2em !important;
 }
 
+/* FormContent */
+
+.formcontent-container {
+    min-height: 100vh;
+    padding-top: 10vh;
+}
+
+.formcontent-grid {
+    min-height: 70vh;
+}
+
+.formcontent-logo {
+    max-width: 100%;
+}
+
+.formcontent-textfield-container {
+    width: 80%;
+}
+
+.formcontent-textfield {
+    z-index: -1;
+    padding: 0.5em 1em;
+    background-color: #f6f6f6;
+    width: 100%;
+}
+
+.formcontent-top-text {
+    line-height: 1em !important;
+    font-family: 'GothamPro', 'Roboto', sans-serif !important;
+    font-weight: 400 !important;
+    color: #88BE8C;
+    padding-bottom: 5%;
+    padding-left: 10%;
+}
+
+.formcontent-button-grid {
+    width: 70%;
+    padding-top: 5% !important;
+}
+
+.formcontent-buttonbase {
+    border-radius: 2em !important;
+    width: 100%;
+}
+
+.formcontent-button-container {
+    background-color: #88BE8C;
+    padding: 0.5em 2.5em 0.5em 2.5em;
+    border-radius: 2em;
+    box-shadow: 3px 3px 10px #d2d2d2;
+}
+
+.formcontent-buttontext {
+    color: white;
+    font-size: 1em;
+}
+
 /* MainContent */
 
 .maincontent-container {
@@ -152,62 +209,6 @@ html {
 .scancontent-icon {
     text-align: center;
     min-width: 15vw;
-}
-
-/* FormContent */
-
-.formcontent-container {
-    min-height: 100vh;
-    padding-top: 10vh;
-}
-
-.formcontent-grid {
-}
-
-.formcontent-logo {
-    max-width: 100%;
-}
-
-.formcontent-textfield-container {
-    width: 80%;
-}
-
-.formcontent-textfield {
-    z-index: -1;
-    padding: 0.5em 1em;
-    background-color: #f6f6f6;
-    width: 100%;
-}
-
-.formcontent-top-text {
-    line-height: 1em !important;
-    font-family: 'GothamPro', 'Roboto', sans-serif !important;
-    font-weight: 400 !important;
-    color: #88BE8C;
-    padding-bottom: 5%;
-    padding-left: 10%;
-}
-
-.formcontent-button-grid {
-    width: 70%;
-    padding-top: 5% !important;
-}
-
-.formcontent-buttonbase {
-    border-radius: 2em !important;
-    width: 100%;
-}
-
-.formcontent-button-container {
-    background-color: #88BE8C;
-    padding: 0.5em 2.5em 0.5em 2.5em;
-    border-radius: 2em;
-    box-shadow: 3px 3px 10px #d2d2d2;
-}
-
-.formcontent-buttontext {
-    color: white;
-    font-size: 1em;
 }
 
 /* EndContent */

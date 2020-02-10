@@ -7,7 +7,7 @@ import {
   Typography,
   ThemeProvider,
   createMuiTheme,
-  responsiveFontSizes, isWidthDown, isWidthUp, withWidth, InputBase, Snackbar, Fade, Slide
+  responsiveFontSizes, isWidthDown, isWidthUp, withWidth, InputBase, Snackbar, Slide
 } from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
@@ -72,6 +72,57 @@ const TopBar: React.FC = () => {
           </ButtonBase>
         </Grid>
       </Grid>
+    </Container>
+  );
+};
+
+const FormContent: React.FC = () => {
+  const [snackState, setSnackState] = useState(false);
+
+  return (
+    <Container id={contentIdArray[CONTENT.FORM]} className="formcontent-container">
+      <Grid container direction="row" alignItems="center" className="formcontent-grid">
+        <Grid item xs={6}>
+          <img className="formcontent-logo" src={LogoFull} alt="bibs-logo"/>
+        </Grid>
+        <Grid container direction="column" spacing={3} alignItems="center" justify="center" item xs={6}>
+          <Grid item>
+            <Typography variant="h2" className="formcontent-top-text">
+              Restez en contact:
+            </Typography>
+          </Grid>
+          <Grid item className="formcontent-textfield-container">
+            <InputBase className="formcontent-textfield" defaultValue="Email"/>
+          </Grid>
+          <Grid item className="formcontent-textfield-container">
+            <InputBase className="formcontent-textfield" defaultValue="Nom"/>
+          </Grid>
+          <Grid item className="formcontent-textfield-container">
+            <InputBase className="formcontent-textfield" defaultValue="Prénom"/>
+          </Grid>
+          <Grid item className="formcontent-button-grid">
+            <ButtonBase className="formcontent-buttonbase" onClick={() => setSnackState(true)}>
+              <Container className="formcontent-button-container">
+                <Typography variant="h5" className="formcontent-buttontext">
+                  S'inscrire
+                </Typography>
+              </Container>
+            </ButtonBase>
+          </Grid>
+        </Grid>
+      </Grid>
+      <ExpandButton id_nb={CONTENT.TOP}/>
+      <Snackbar
+        open={snackState}
+        TransitionComponent={SlideTransition}
+        autoHideDuration={3000}
+        onClose={() => setSnackState(false)}
+        anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+      >
+        <Alert severity="success">
+          Merci de votre support
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
@@ -238,57 +289,6 @@ const ScanContentSize: React.FC<WidthProps> = (props) => {
 };
 const ScanContent = withWidth()(ScanContentSize);
 
-const FormContent: React.FC = () => {
-  const [snackState, setSnackState] = useState(false);
-
-  return (
-    <Container id={contentIdArray[CONTENT.FORM]} className="formcontent-container">
-      <Grid container direction="row" className="formcontent-grid">
-        <Grid item xs={6}>
-          <img className="formcontent-logo" src={LogoFull} alt="bibs-logo"/>
-        </Grid>
-        <Grid container direction="column" spacing={3} alignItems="center" justify="center" item xs={6}>
-          <Grid item>
-            <Typography variant="h2" className="formcontent-top-text">
-              Restez en contact:
-            </Typography>
-          </Grid>
-          <Grid item className="formcontent-textfield-container">
-            <InputBase className="formcontent-textfield" defaultValue="Email"/>
-          </Grid>
-          <Grid item className="formcontent-textfield-container">
-            <InputBase className="formcontent-textfield" defaultValue="Nom"/>
-          </Grid>
-          <Grid item className="formcontent-textfield-container">
-            <InputBase className="formcontent-textfield" defaultValue="Prénom"/>
-          </Grid>
-          <Grid item className="formcontent-button-grid">
-            <ButtonBase className="formcontent-buttonbase" onClick={() => setSnackState(true)}>
-              <Container className="formcontent-button-container">
-                <Typography variant="h5" className="formcontent-buttontext">
-                  S'inscrire
-                </Typography>
-              </Container>
-            </ButtonBase>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Snackbar
-        open={snackState}
-        TransitionComponent={SlideTransition}
-        autoHideDuration={3000}
-        onClose={() => setSnackState(false)}
-        anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-      >
-        <Alert severity="success">
-          Merci de votre support
-        </Alert>
-      </Snackbar>
-      <ExpandButton id_nb={CONTENT.TOP}/>
-    </Container>
-  );
-};
-
 const EndContent: React.FC = () => {
   return (
     <Container id={contentIdArray[CONTENT.END]} className="endcontent-container">
@@ -310,7 +310,7 @@ const EndContent: React.FC = () => {
       </Grid>
     </Container>
   )
-}
+};
 
 const FooterContent: React.FC = () => {
   return (
@@ -327,12 +327,12 @@ const FooterContent: React.FC = () => {
 
 
 export const Home: React.FC = () => {
-  // useEffect(() => {
-  //     setTimeout(() => {
-  //       if (document.documentElement.scrollTop !== 0)
-  //         slideTo(CONTENT.FORM)
-  //     }, 1000);
-  // }, []);
+  useEffect(() => {
+      setTimeout(() => {
+        if (document.documentElement.scrollTop !== 0)
+          slideTo(CONTENT.FORM)
+      }, 1000);
+  }, []);
 
   return (
     <div onWheel={slidePage}>
