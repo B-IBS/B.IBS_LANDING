@@ -238,7 +238,7 @@ const AnalyseContentSize: React.FC<WidthProps> = (props) => {
     return (
       <div className="graphcontent-icon">
         <Typography className="graphcontent-text2 text-font" variant="h4">
-          Suivez vos progression grâce à des outils faciles à utiliser
+          Suivez votre progression grâce à des outils faciles à utiliser
         </Typography>
       </div>
     );
