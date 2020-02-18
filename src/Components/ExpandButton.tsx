@@ -1,5 +1,5 @@
 import React from "react";
-import {ButtonBase, Container, styled} from "@material-ui/core";
+import {ButtonBase, Container, styled, useMediaQuery} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {slideTo} from "./SlidingPage";
 
@@ -13,11 +13,20 @@ interface ExpandProps {
 }
 
 export const ExpandButton: React.FC<ExpandProps> = (props) => {
-  return (
-    <Container className="expand-container">
-      <ButtonBase onClick={() => slideTo(props.id_nb)} className="expand-button" disableRipple={true}>
-        <ExpandIcon/>
-      </ButtonBase>
-    </Container>
-  );
+  const matchesWidth = useMediaQuery('(min-width: 800px)');
+
+  if (matchesWidth) {
+    return (
+      <Container className="expand-container">
+        <ButtonBase onClick={() => slideTo(props.id_nb)} className="expand-button" disableRipple={true}>
+          <ExpandIcon/>
+        </ButtonBase>
+      </Container>
+    );
+  } else {
+    return (
+      <Container className="expand-container">
+      </Container>
+    )
+  }
 };

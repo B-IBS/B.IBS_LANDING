@@ -7,7 +7,7 @@ import {
   Typography,
   ThemeProvider,
   createMuiTheme,
-  responsiveFontSizes, isWidthDown, isWidthUp, withWidth, InputBase, Snackbar, Slide
+  responsiveFontSizes, isWidthDown, isWidthUp, withWidth, Snackbar, Slide, useMediaQuery
 } from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
@@ -87,10 +87,11 @@ const FormContent: React.FC = () => {
         </Grid>
         <Grid container direction="column" spacing={3} alignItems="center" justify="center" item xs={6}>
           <Grid item>
-            <Typography variant="h2" className="formcontent-top-text">
+            <Typography variant="h2" className="formcontent-top-text text-font">
               Restez en contact:
             </Typography>
           </Grid>
+{/*
           <Grid item className="formcontent-textfield-container">
             <InputBase className="formcontent-textfield" defaultValue="Email"/>
           </Grid>
@@ -100,8 +101,9 @@ const FormContent: React.FC = () => {
           <Grid item className="formcontent-textfield-container">
             <InputBase className="formcontent-textfield" defaultValue="Prénom"/>
           </Grid>
+*/}
           <Grid item className="formcontent-button-grid">
-            <ButtonBase className="formcontent-buttonbase" onClick={() => setSnackState(true)}>
+            <ButtonBase className="formcontent-buttonbase" onClick={() => setSnackState(true)} target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSevlo4ORx-AlUcjHasPokpSSUSPJ_w2KkTf2GJzdT2EkMqCaw/viewform?usp=sf_link">
               <Container className="formcontent-button-container">
                 <Typography variant="h5" className="formcontent-buttontext">
                   S'inscrire
@@ -115,7 +117,7 @@ const FormContent: React.FC = () => {
       <Snackbar
         open={snackState}
         TransitionComponent={SlideTransition}
-        autoHideDuration={3000}
+        autoHideDuration={100000}
         onClose={() => setSnackState(false)}
         anchorOrigin={{vertical: 'top', horizontal: 'center'}}
       >
@@ -128,28 +130,52 @@ const FormContent: React.FC = () => {
 };
 
 const MainContent: React.FC = () => {
-  return (
-    <Container id={contentIdArray[CONTENT.TOP]} className="maincontent-container">
-      <Grid container direction="row" justify="center" spacing={10}>
-        <Grid item container xs direction="column" justify="center" spacing={3}>
+  const matchesWidth = useMediaQuery('(min-width: 800px)');
+
+  if (matchesWidth) {
+    return (
+      <Container id={contentIdArray[CONTENT.TOP]} className="maincontent-container">
+        <Grid container direction="row" justify="center" spacing={10}>
+          <Grid item container xs direction="column" justify="center" spacing={3}>
+            <Grid item>
+              <Typography className="maincontent-text1 text-font" align="right" variant="h2">
+                Reprenez le contrôle
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography className="maincontent-text2 text-font" align="right" variant="h6">
+                Devenez un acteur majeur de votre maladie grâce à B.IBS
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid item xs>
+            <PhoneDisplay filename={HomePhoneScreen}/>
+          </Grid>
+        </Grid>
+        <ExpandButton id_nb={CONTENT.FEATURE}/>
+      </Container>
+    );
+  } else {
+    return (
+      <Container id={contentIdArray[CONTENT.TOP]} className="maincontent-container">
+        <Grid item container xs direction="column" justify="center"  alignItems="center" spacing={3}>
           <Grid item>
-            <Typography className="maincontent-text1" align="right" variant="h2">
+            <Typography className="maincontent-text1-small text-font" align="right" variant="h2">
               Reprenez le contrôle
             </Typography>
           </Grid>
           <Grid item>
-            <Typography className="maincontent-text2" align="right" variant="h6">
+            <Typography className="maincontent-text2-small text-font" align="right" variant="h6">
               Devenez un acteur majeur de votre maladie grâce à B.IBS
             </Typography>
           </Grid>
+          <Grid item>
+            <PhoneDisplay filename={HomePhoneScreen}/>
+          </Grid>
         </Grid>
-        <Grid item xs>
-          <PhoneDisplay filename={HomePhoneScreen}/>
-        </Grid>
-      </Grid>
-      <ExpandButton id_nb={CONTENT.FEATURE}/>
-    </Container>
-  );
+      </Container>
+    )
+  }
 };
 
 const FeatureContent: React.FC = () => {
@@ -161,12 +187,12 @@ const FeatureContent: React.FC = () => {
             <img src={BrainIA}  alt="brain-ia" width="100%"/>
           </Grid>
           <Grid item>
-            <Typography className="featurecontent-title" variant="h4" align="center">
+            <Typography className="featurecontent-title text-font" variant="h4" align="center">
               Intelligence Artificielle
             </Typography>
           </Grid>
           <Grid item>
-            <Typography className="featurecontent-description" variant="h5" align="center">
+            <Typography className="featurecontent-description text-font" variant="h5" align="center">
               Profitez d'un suivi et de recommandations personnalisées grâce à l'intelligence artificielle
             </Typography>
           </Grid>
@@ -176,12 +202,12 @@ const FeatureContent: React.FC = () => {
             <img src={PuzzlePiece} alt="puzzle-piece" width="100%"/>
           </Grid>
           <Grid item>
-            <Typography className="featurecontent-title" variant="h4" align="center">
+            <Typography className="featurecontent-title text-font" variant="h4" align="center">
               Personnalisable et personnalisé
             </Typography>
           </Grid>
           <Grid item>
-            <Typography className="featurecontent-description" variant="h5" align="center">
+            <Typography className="featurecontent-description text-font" variant="h5" align="center">
               Profitez de solutions adaptées à vos besoins et choissisez celles que vous préférez
             </Typography>
           </Grid>
@@ -191,12 +217,12 @@ const FeatureContent: React.FC = () => {
             <img src={MedicHeart} alt="medic-heart" width="100%"/>
           </Grid>
           <Grid item>
-            <Typography className="featurecontent-title" variant="h4" align="center">
+            <Typography className="featurecontent-title text-font" variant="h4" align="center">
               Faites vous comprendre
             </Typography>
           </Grid>
           <Grid item>
-            <Typography className="featurecontent-description" variant="h5" align="center">
+            <Typography className="featurecontent-description text-font" variant="h5" align="center">
               Facilitez la communication avec votre médecin à l'aide d'une synthèse de votre situation
             </Typography>
           </Grid>
@@ -211,7 +237,7 @@ const AnalyseContentSize: React.FC<WidthProps> = (props) => {
   const responsiveSideText = () => {
     return (
       <div className="graphcontent-icon">
-        <Typography className="graphcontent-text2" variant="h4">
+        <Typography className="graphcontent-text2 text-font" variant="h4">
           Suivez vos progression grâce à des outils faciles à utiliser
         </Typography>
       </div>
@@ -222,7 +248,7 @@ const AnalyseContentSize: React.FC<WidthProps> = (props) => {
       <Grid container direction="row" justify="center" alignItems="center" alignContent="center" spacing={10}>
           <Grid item>
             <div className="graphcontent-icon">
-              <Typography className="graphcontent-text1" variant="h2">
+              <Typography className="graphcontent-text1 text-font" variant="h2">
                 Analyse
               </Typography>
             </div>
@@ -252,7 +278,7 @@ const ScanContentSize: React.FC<WidthProps> = (props) => {
   const responsiveSideText = () => {
     return (
       <div className="scancontent-icon">
-        <Typography className="scancontent-text2" variant="h4">
+        <Typography className="scancontent-text2 text-font" variant="h4">
           Simplifiez vous la recherche des FODMAPs
         </Typography>
       </div>
@@ -263,7 +289,7 @@ const ScanContentSize: React.FC<WidthProps> = (props) => {
       <Grid container direction="row" justify="center" alignItems="center" alignContent="center" spacing={10}>
         <Grid item>
           <div className="scancontent-icon">
-            <Typography className="scancontent-text1" variant="h2">
+            <Typography className="scancontent-text1 text-font" variant="h2">
               Scan
             </Typography>
           </div>
@@ -294,12 +320,12 @@ const EndContent: React.FC = () => {
     <Container id={contentIdArray[CONTENT.END]} className="endcontent-container">
       <Grid container direction="column" justify="center" alignItems="center" className="endcontent-grid" spacing={5}>
         <Grid item>
-          <Typography variant="h2" className="endcontent-title" align="center">
-            Pour rester informés, enregistrez vous par mail.
+          <Typography variant="h2" className="endcontent-title text-font" align="center">
+            Pour rester informés, inscrivez-vous à notre contact.
           </Typography>
         </Grid>
         <Grid item>
-          <ButtonBase onClick={() => slideTo(CONTENT.FORM)} className="topbar-buttonbase">
+          <ButtonBase onClick={() => slideTo(CONTENT.FORM)} className="topbar-buttonbase endcontent-button-base">
             <Container className="endcontent-button-container">
               <Typography className="endcontent-button-text">
                 S'inscrire
@@ -327,15 +353,22 @@ const FooterContent: React.FC = () => {
 
 
 export const Home: React.FC = () => {
+  const matchesWidth = useMediaQuery('(min-width: 800px)');
+
   useEffect(() => {
-      setTimeout(() => {
-        if (document.documentElement.scrollTop !== 0)
-          slideTo(CONTENT.FORM)
-      }, 1000);
+    setTimeout(() => {
+      if (document.documentElement.scrollTop !== 0)
+        slideTo(CONTENT.FORM)
+    }, 1000);
   }, []);
 
   return (
-    <div onWheel={slidePage}>
+    <div onWheel={(e) => {
+      if (matchesWidth)
+        slidePage(e);
+    }}
+      style={{overflowY: matchesWidth ? 'hidden' : 'initial', overflowX: "hidden", height: '100vh'}}
+    >
       <ThemeProvider theme={theme}>
         <Grid container direction="column" justify="center">
           <Grid item className="topbar-sticky">
